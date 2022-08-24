@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Add to Array</h2>
+        <form method="post" id="new">
+        <input type="text" required id="id" Placeholder="id">
+        <input type="text" required id="user" placeholder="user">
+        <input type="text" required id="number" placeholder="number">
+        <input type="button" id="save" value="Save">
+        </form>
+        <H2>Update Array</H2>
+        <form method="post" id="update">
+            <select id="ch_id"></select>
+            <input type="text" required id="ch_user" placeholder="user">
+            <input type="text" required id="ch_num" placeholder="number">
+            <input type="button" id="change" value="Save Changes">
+            </form>
+    </div>
+    <br>
+    <div class="show-data">
+        <table border="1px">
+            <thead>
+                <th>Id</th>
+                <th>User</th>
+                <th>Number</th>
+                
+            </thead>
+            <tbody id="show">
+
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="jquery.js"></script>
+    <script>
+
+
+        $(document).ready(function (){
+            var data = [];
+            $("#save").click(function (){
+               save();
+                display();
+                
+               
+              
+            });
+
+          
+            $("#ch_id").change(function (){
+                var nid = $('#ch_id').find(":selected").val();
+                $("#ch_user").val(data[nid].user);
+                $("#ch_num").val(data[nid].number);
+            });
+
+
+            function display(){
+                for(i=0;i<data.length;i++)
+               {
+                var xyz = xyz + "<tr> <td>" + data[i].id + "</td> <td>" + data[i].user + "</td> <td>" + data[i].number + "</td></tr>";
+                var op = op + "<option value=" + i +">" + data[i].id + "</option>";
+                }
+               $("#show").html(xyz);
+               $("#ch_id").html(op);
+
+               $("#ch_user").val(data[0].user);
+               $("#ch_num").val(data[0].number);
+            }
+            function save(){
+              
+                var id = $("#id").val();
+                var user = $("#user").val();
+                var number = $("#number").val();
+                var exist = 0;
+                for(a=0;a<data.length;a++)
+               {
+                if(data[a].id == id)
+                {
+                    exist = 1;
+                }
+                
+                }
+
+                if(exist == 1){
+                    alert("Data exists");
+                }
+                else
+                {
+                let abc = {
+                        "id" : id,
+                        "user" : user,
+                        "number" : number
+                }
+                data.push(abc);
+            }
+        }
+   
+
+
+        $("#change").click(function (){
+        
+            var nid = $('#ch_id').find(":selected").val();
+            var user = $("#ch_user").val();
+            var number = $("#ch_num").val();
+
+            data[nid].user = user;
+            data[nid].number = number;
+            display();
+        });
+    
+        });
+      
+    </script>
+</body>
+</html>
